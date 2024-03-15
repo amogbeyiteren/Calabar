@@ -24,7 +24,7 @@ const CategoryView: React.FC<CategoryViewProps> = ({
               {label}
             </div>
             <div 
-              className="text-neutral-200 font-light"
+              className="text-neutral-400 font-light"
             >
               {description}
             </div>

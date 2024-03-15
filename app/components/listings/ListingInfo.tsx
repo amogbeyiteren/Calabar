@@ -90,7 +90,11 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
         {description}
       </div>
       <hr />
+      <div className="my-10">
       <Map center={coordinates} />
+      </div>
+     
+     
     </div>
    );
 }

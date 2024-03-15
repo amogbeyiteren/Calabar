@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from 'date-fns';
+import { FaStar } from 'react-icons/fa'; // Import the star icon
 
 import useCountries from "@/app/hooks/useCountries";
 import { 
@@ -23,7 +24,7 @@ interface ListingCardProps {
   disabled?: boolean;
   actionLabel?: string;
   actionId?: string;
-  currentUser?: SafeUser | null
+  currentUser?: SafeUser | null;
 };
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -112,17 +113,25 @@ const ListingCard: React.FC<ListingCardProps> = ({
           {/* {location?.region}, {location?.label} */}
           {data.title}
         </div>
-        <div className="font-light text-sm text-neutral-700">
-          {reservationDate || data.category} | {location?.region}, {location?.label}
+        
+        <div className="font-light flex justify-between text-sm text-neutral-700">
+          <div className="text-green-600 font-semibold">{reservationDate || data.category}</div> <div> {location?.region}, {location?.label}</div>
         </div>
+        <div className="flex gap-1 items-center"> {/* Add a div to contain the stars */}
+            {Array.from(Array(5).keys()).map((_, index) => ( // Render 5 stars
+              <FaStar key={index} className="text-yellow-400" /> // Use the star icon with yellow color
+            ))}
+          </div>
         <div className="flex flex-row items-center gap-1">
+          
           <div className="font-semibold">
-          ₦ {price}
+            ₦ {price}
           </div>
           {!reservation && (
-            <div className="font-light">day</div>
+            <div className="font-light">a day</div>
           )}
         </div>
+       
         {onAction && actionLabel && (
           <Button
             disabled={disabled}

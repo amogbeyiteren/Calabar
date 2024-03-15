@@ -16,6 +16,7 @@ import { categories } from "@/app/components/navbar/Categories";
 import ListingHead from "@/app/components/listings/ListingHead";
 import ListingInfo from "@/app/components/listings/ListingInfo";
 import ListingReservation from "@/app/components/listings/ListingReservation";
+import ReviewsSection from "@/app/components/listings/ReviewSection";
 
 
 // initial and default date reanges to be used
@@ -131,7 +132,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
           mx-auto
         "
       >
-        <div className="flex flex-col gap-6">
+        <div className="">
           <ListingHead
             title={listing.title}
             imageSrc={listing.imageSrc}
@@ -139,12 +140,16 @@ const ListingClient: React.FC<ListingClientProps> = ({
             id={listing.id}
             currentUser={currentUser}
           />
+
+
+          <div className="flex gap-6">
+
+          </div>
+
+
           <div 
             className="
-              grid 
-              grid-cols-1 
-              md:grid-cols-5 
-              md:gap-10 
+              
               mt-6
             "
           >
@@ -176,6 +181,8 @@ const ListingClient: React.FC<ListingClientProps> = ({
                 disabled={isLoading}
                 disabledDates={disabledDates}
               />
+
+              <ReviewsSection/>
             </div>
           </div>
         </div>
