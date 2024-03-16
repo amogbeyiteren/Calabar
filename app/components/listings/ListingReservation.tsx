@@ -44,14 +44,15 @@ const ListingReservation: React.FC<
     metadata: {
       name,
       phone,
+      custom_fields: [] // Add the empty custom_fields array
     },
     publicKey,
     text: "Pay Now",
     onSuccess: () => {
-      onPaymentSuccess(); // Call the onPaymentSuccess callback function
+      onPaymentSuccess();
     },
     onClose: () => alert("This Transaction Will Be Canceled"),
-  }
+  };
 
   return ( 
 
