@@ -2,7 +2,8 @@
 
 import Select from 'react-select'
 
-import useCountries from '@/app/hooks/useCountries';
+// import useCountries from '@/app/hooks/useCountries';
+import useCalabarPlaces from '@/app/hooks/useCountries';
 
 export type CountrySelectValue = {
   flag: string;
@@ -21,12 +22,12 @@ const CountrySelect: React.FC<CountrySelectProps> = ({
   value,
   onChange
 }) => {
-  const { getAll } = useCountries();
+  const { getAll } = useCalabarPlaces();
 
   return ( 
     <div>
       <Select
-        placeholder="Anywhere"
+        placeholder="Choose Location"
         isClearable
         options={getAll()}
         value={value}

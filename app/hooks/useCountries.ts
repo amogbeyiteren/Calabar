@@ -22,7 +22,10 @@ const calabarPlaces = [
 const formattedCalabarPlaces = calabarPlaces.map((place) => ({
   value: place.code,
   label: place.name,
-  coordinates: place.coordinates
+  coordinates: place.coordinates,
+  flag: '', // You need to set appropriate flag value here
+  latlng: place.coordinates, // Assuming coordinates represent latitude and longitude
+  region: '' // You need to set appropriate region value here
 }));
 
 const useCalabarPlaces = () => {
