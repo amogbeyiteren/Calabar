@@ -17,18 +17,19 @@ import Modal from "./Modal";
 import Counter from "../inputs/Counter";
 import CategoryInput from '../inputs/CategoryInput';
 import CountrySelect from "../inputs/CountrySelect";
-import { categories } from '../navbar/Categories';
+import { categories, centers } from '../navbar/Categories';
 import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
 import Heading from '../Heading';
 
 enum STEPS {
-  CATEGORY = 0,
-  LOCATION = 1,
-  INFO = 2,
-  IMAGES = 3,
-  DESCRIPTION = 4,
-  PRICE = 5,
+  CENTER = 0,
+  CATEGORY = 1,
+  LOCATION = 2,
+  INFO = 3,
+  IMAGES = 4,
+  DESCRIPTION = 5,
+  PRICE = 6,
 }
 
 const RentModal = () => {
@@ -36,7 +37,7 @@ const RentModal = () => {
   const rentModal = useRentModal();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [step, setStep] = useState(STEPS.CATEGORY);
+  const [step, setStep] = useState(STEPS.CENTER);
 
   const { 
     register, 
@@ -50,6 +51,7 @@ const RentModal = () => {
   } = useForm<FieldValues>({
     defaultValues: {
       category: '',
+      center: '',
       location: null,
       guestCount: 1,
       roomCount: 1,
@@ -63,6 +65,7 @@ const RentModal = () => {
 
   const location = watch('location');
   const category = watch('category');
+  const center = watch('center');
   const guestCount = watch('guestCount');
   const roomCount = watch('roomCount');
   const bathroomCount = watch('bathroomCount');
@@ -101,7 +104,7 @@ const RentModal = () => {
       toast.success('Listing created!');
       router.refresh();
       reset();
-      setStep(STEPS.CATEGORY)
+      setStep(STEPS.CENTER)
       rentModal.onClose();
     })
     .catch(() => {
@@ -121,7 +124,7 @@ const RentModal = () => {
   }, [step]);
 
   const secondaryActionLabel = useMemo(() => {
-    if (step === STEPS.CATEGORY) {
+    if (step === STEPS.CENTER) {
       return undefined
     }
 
@@ -130,6 +133,39 @@ const RentModal = () => {
 
   let bodyContent = (
     <div className="flex flex-col gap-8">
+      <Heading
+        title="What Tourist Center ?"
+        subtitle="Pick The Tourist Center Closest to Your Property"
+      />
+      <div 
+        className="
+          grid 
+          grid-cols-1 
+          md:grid-cols-2 
+          gap-3
+          max-h-[50vh]
+          overflow-y-auto
+        "
+      >
+        {centers.map((item) => (
+          <div key={item.label} className="col-span-1">
+            <CategoryInput
+              onClick={(center) => 
+                setCustomValue('center', center)}
+              selected={center === item.label}
+              label={item.label}
+              icon={item.icon}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+
+
+  if (step === STEPS.CATEGORY) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
       <Heading
         title="Which of these best describes your Property?"
         subtitle="Pick a category"
@@ -151,26 +187,27 @@ const RentModal = () => {
                 setCustomValue('category', category)}
               selected={category === item.label}
               label={item.label}
-              // icon={item.icon}
+              icon={item.icon}
             />
           </div>
         ))}
       </div>
     </div>
-  )
+    );
+  }
 
   if (step === STEPS.LOCATION) {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="Where is your Property located?"
+          title="Where is your Property located In Calabar ?"
           subtitle="Help guests find you!"
         />
         <CountrySelect 
           value={location} 
           onChange={(value) => setCustomValue('location', value)} 
         />
-        <Map center={location?.latlng} />
+        <Map center={location?.coordinates} />
       </div>
     );
   }
@@ -278,7 +315,7 @@ const RentModal = () => {
       actionLabel={actionLabel}
       onSubmit={handleSubmit(onSubmit)}
       secondaryActionLabel={secondaryActionLabel}
-      secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
+      secondaryAction={step === STEPS.CENTER ? undefined : onBack}
       onClose={rentModal.onClose}
       body={bodyContent}
     />

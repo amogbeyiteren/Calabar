@@ -11,6 +11,9 @@ export interface IListingsParams {
   endDate?: string;
   locationValue?: string;
   category?: string;
+  center?: string;
+  savedCenter?: string
+
 }
 
 // Exporting the function as the default export
@@ -53,6 +56,11 @@ export default async function getListings(params: IListingsParams) {
       query.guestCount = {
         gte: +guestCount
       }
+    }
+
+
+    if (params.center) {
+      query.center = params.center;
     }
 
     // If a bathroomCount is provided, add it to the query object as a greater than or equal to condition

@@ -12,7 +12,7 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 
 import Container from "@/app/components/Container";
-import { categories } from "@/app/components/navbar/Categories";
+import { categories, centers } from "@/app/components/navbar/Categories";
 import ListingHead from "@/app/components/listings/ListingHead";
 import ListingInfo from "@/app/components/listings/ListingInfo";
 import ListingReservation from "@/app/components/listings/ListingReservation";
@@ -67,6 +67,11 @@ const ListingClient: React.FC<ListingClientProps> = ({
      return categories.find((items) => 
       items.label === listing.category);
   }, [listing.category]);
+
+  const center = useMemo(() => {
+    return centers.find((items) => 
+     items.label === listing.center);
+ }, [listing.center]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(listing.price);
@@ -156,6 +161,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
             <ListingInfo
               user={listing.user}
               category={category}
+              center={center}
               description={listing.description}
               roomCount={listing.roomCount}
               guestCount={listing.guestCount}

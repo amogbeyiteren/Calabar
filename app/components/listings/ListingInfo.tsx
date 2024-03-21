@@ -19,11 +19,17 @@ interface ListingInfoProps {
   guestCount: number;
   roomCount: number;
   bathroomCount: number;
+  center: {
+   
+    label: string;
+    description: string;
+  } | undefined
   category: {
    
     label: string;
     description: string;
   } | undefined
+
   locationValue: string;
 }
 
@@ -33,12 +39,13 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
   guestCount,
   roomCount,
   bathroomCount,
+  center,
   category,
   locationValue,
 }) => {
   const { getByValue } = useCountries();
 
-  const coordinates = getByValue(locationValue)?.latlng
+  const coordinates = getByValue(locationValue)?.coordinates
 
   return ( 
     <div className="col-span-4 flex flex-col gap-8">
@@ -84,6 +91,15 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
           description={category?.description} 
         />
       )}
+
+
+      {center && (
+        <ListingCategory
+         
+          label={center?.label}
+          description={center?.description} 
+        />
+      )}
      
       <div className="
       text-lg font-light text-neutral-800">
@@ -91,7 +107,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
       </div>
       <hr />
       <div className="my-10">
-      <Map center={coordinates} />
+      <Map />
       </div>
      
      

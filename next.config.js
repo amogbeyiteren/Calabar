@@ -3,6 +3,10 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+   webpack: (config) => {
+      config.externals = [...config.externals, 'bcrypt'];
+        return config;
+      },
   images: {
     domains: [
       'res.cloudinary.com', 
