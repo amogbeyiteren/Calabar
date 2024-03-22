@@ -12,7 +12,7 @@ interface TouristCenter {
     description: string;
 }
 
-function mainPage() {
+function MainPage() {
     const [touristCenters, setTouristCenters] = useState<TouristCenter[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
@@ -70,4 +70,4 @@ function mainPage() {
     );
 }
 
-export default mainPage;
+export default MainPage;
