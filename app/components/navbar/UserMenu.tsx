@@ -1,10 +1,11 @@
 'use client';
 
 import { useCallback, useState } from "react";
+import Link from "next/link";
 import { AiOutlineMenu } from "react-icons/ai";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useRentModal from "@/app/hooks/useRentModal";
@@ -124,6 +125,9 @@ const UserMenu: React.FC<UserMenuProps> = ({
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
+
+                <Link href="/trips">
+                </Link>
                 <MenuItem 
                   label="My bookings" 
                   onClick={() => router.push('/trips')}

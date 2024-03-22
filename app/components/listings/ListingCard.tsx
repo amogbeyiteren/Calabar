@@ -16,6 +16,7 @@ import {
 import HeartButton from "../HeartButton";
 import Button from "../Button";
 import ClientOnly from "../ClientOnly";
+import Link from "next/link";
 
 interface ListingCardProps {
   data: SafeListing;
@@ -72,7 +73,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
   }, [reservation]);
 
   return (
-    <div 
+    <Link
+     href={`/listings/${data.id}`} 
       onClick={() => router.push(`/listings/${data.id}`)} 
       className="col-span-1 cursor-pointer group"
     >
@@ -141,7 +143,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
           />
         )}
       </div>
-    </div>
+    </Link>
    );
 }
  
