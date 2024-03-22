@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
+import Link from "next/link";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useRentModal from "@/app/hooks/useRentModal";
@@ -44,6 +44,25 @@ const UserMenu: React.FC<UserMenuProps> = ({
   return ( 
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
+      <Link
+  href="/alllistings"
+  className="
+    hidden
+    md:block
+    text-gray-800
+   
+    
+    active:bg-green-700 
+    font-semibold 
+    py-3 
+    px-4 
+    rounded-full 
+    transition 
+    cursor-pointer
+  "
+>
+  View All Properties
+</Link>
       <div 
   onClick={onRent}
   className="

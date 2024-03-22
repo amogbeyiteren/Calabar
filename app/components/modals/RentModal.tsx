@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { FaWater } from 'react-icons/fa';
 import { 
   FieldValues, 
   SubmitHandler, 
@@ -10,7 +11,7 @@ import {
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from "react";
-
+import { useEffect } from 'react';
 import useRentModal from '@/app/hooks/useRentModal';
 
 import Modal from "./Modal";
@@ -35,7 +36,7 @@ enum STEPS {
 const RentModal = () => {
   const router = useRouter();
   const rentModal = useRentModal();
-
+  const [centers, setCenters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CENTER);
 
@@ -83,6 +84,20 @@ const RentModal = () => {
       shouldValidate: true
     })
   }
+
+  useEffect(() => {
+    fetchCenters();
+  }, []);
+
+
+  const fetchCenters = async () => {
+    try {
+      const response = await axios.get('https://dark-blue-dibbler-toga.cyclic.app/touristCenters');
+      setCenters(response.data);
+    } catch (error) {
+      console.error('Error fetching tourist centers:', error);
+    }
+  };
 
   const onBack = () => {
     setStep((value) => value - 1);
@@ -147,14 +162,14 @@ const RentModal = () => {
           overflow-y-auto
         "
       >
-        {centers.map((item) => (
-          <div key={item.label} className="col-span-1">
+         {centers.map((item: any) => (
+          <div key={item._id} className="col-span-1">
             <CategoryInput
               onClick={(center) => 
                 setCustomValue('center', center)}
               selected={center === item.label}
               label={item.label}
-              icon={item.icon}
+              icon={FaWater}
             />
           </div>
         ))}

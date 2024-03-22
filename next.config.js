@@ -1,19 +1,52 @@
-/** @type {import('next').NextConfig} */
+
+const withPWA = require('next-pwa')
+
+
+
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
-   webpack: (config) => {
-      config.externals = [...config.externals, 'bcrypt'];
-        return config;
-      },
-  images: {
-    domains: [
-      'res.cloudinary.com', 
-      'avatars.githubusercontent.com',
-      'lh3.googleusercontent.com'
-    ]
-  }
+
+
+
+...withPWA({
+
+dest: 'public',
+
+register: true,
+
+skipWaiting: true
+
+}),
+
+experimental: {
+
+appDir: true,
+
+},
+
+webpack: (config) => {
+
+config.externals = [...config.externals, 'bcrypt'];
+
+return config;
+
+},
+
+images: {
+
+domains: [
+
+'res.cloudinary.com',
+
+'avatars.githubusercontent.com',
+
+'lh3.googleusercontent.com'
+
+]
+
 }
 
-module.exports = nextConfig 
+}
+
+
+
+module.exports = nextConfig

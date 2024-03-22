@@ -7,14 +7,18 @@ import SearchModal from '@/app/components/modals/SearchModal';
 import RentModal from '@/app/components/modals/RentModal';
 import Footer from './components/navbar/Footer';
 import ToasterProvider from '@/app/providers/ToasterProvider';
+import { Metadata } from 'next';
 
 import './globals.css'
 import ClientOnly from './components/ClientOnly';
 import getCurrentUser from './actions/getCurrentUser';
 
 export const metadata = {
+  manifest: "/manifest.json", 
   title: 'Calabr | Rent Your Property in Calabar',
   description: 'Rent properties Around',
+  icons: {apple: '/icon.png'},
+  themeColor:  '#fff'
 }
 
 // const font = Nunito({ 

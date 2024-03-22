@@ -24,7 +24,8 @@ export default async function getListings(params: IListingsParams) {
       userId,
       roomCount, 
       guestCount, 
-      bathroomCount, 
+      bathroomCount,
+      center, 
       locationValue,
       startDate,
       endDate,
@@ -44,6 +45,10 @@ export default async function getListings(params: IListingsParams) {
       query.category = category;
     }
 
+    if (center) {
+      query.center = center;
+    }
+
     // If a roomCount is provided, add it to the query object as a greater than or equal to condition
     if (roomCount) {
       query.roomCount = {
@@ -59,9 +64,7 @@ export default async function getListings(params: IListingsParams) {
     }
 
 
-    if (params.center) {
-      query.center = params.center;
-    }
+  
 
     // If a bathroomCount is provided, add it to the query object as a greater than or equal to condition
     if (bathroomCount) {
