@@ -8,6 +8,7 @@ interface TouristCenter {
     label: string;
     description: string;
     image: string;
+    openingHours: string; // Added openingHours field
 }
 
 function DashboardPage() {
@@ -19,7 +20,8 @@ function DashboardPage() {
         _id: '',
         label: '',
         description: '',
-        image: ''
+        image: '',
+        openingHours: '' // Initialize openingHours field
     });
 
     useEffect(() => {
@@ -97,7 +99,8 @@ function DashboardPage() {
             _id: '',
             label: '',
             description: '',
-            image: ''
+            image: '',
+            openingHours: '' // Initialize openingHours field
         });
         setModalVisible(true);
     };
@@ -127,6 +130,7 @@ function DashboardPage() {
                     <div key={center._id} className="border border-gray-200 rounded-lg p-4">
                         <h3 className="text-lg font-semibold mb-2">{center.label}</h3>
                         <p className="mb-2">{center.description}</p>
+                        <p className="mb-2"><strong>Opening Hours:</strong> {center.openingHours}</p>
                         <img src={center.image} alt={center.label} className="w-full h-auto mb-2" />
                         <button
                             className="bg-green-500 text-white px-3 py-1 rounded-lg mr-2"
@@ -175,6 +179,15 @@ function DashboardPage() {
                                 onChange={(e) => setModalData({ ...modalData, image: e.target.value })}
                             />
                         </label>
+                        <label className="block mb-4">
+                            Opening Hours:
+                            <input
+                                type="text"
+                                className="border border-gray-300 rounded-md px-2 py-1 w-full"
+                                value={modalData.openingHours}
+                                onChange={(e) => setModalData({ ...modalData, openingHours: e.target.value })}
+                            />
+                        </label>
                         <div className="flex justify-end">
                             <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2" onClick={closeModal}>Cancel</button>
                             <button className="bg-green-500 text-white px-4 py-2 rounded-lg" onClick={modalData._id ? handleUpdateTouristCenter : handleCreateTouristCenter} disabled={loading}>
@@ -189,3 +202,5 @@ function DashboardPage() {
 }
 
 export default DashboardPage;
+
+                           

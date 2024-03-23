@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
@@ -10,6 +11,7 @@ interface TouristCenter {
     icon: React.ElementType;
     image: string;
     description: string;
+    openingHours: string; // Added openingHours field
 }
 
 function MainPage() {
@@ -58,10 +60,18 @@ function MainPage() {
                                
                                 <h2 className="text-lg font-semibold">{center.label}</h2>
                             </div>
+                            <div className="bg-green-200 text-xs font-bold text-green-800 px-2 py-1 rounded-md mb-4 inline-block">
+                                Opens {center.openingHours}
+                            </div>
                             <p className="text-sm text-gray-600 mb-4">{center.description.slice(0, 120)}...</p>
+                           
                         </div>
-                        <Link href={`/alllistings/${center.label}`} className="bg-green-500 text-white py-2 w-[40%] rounded-md hover:bg-blue-600 transition duration-300 ease-in-out flex items-center justify-start px-4">
-                            Visit Center <span className="ml-2">&rarr;</span>
+
+                        <Link href={`/alllistings/${center.label}`} >
+                            <button className='bg-green-500 text-sm text-white py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out flex items-center justify-start px-4'>
+                            View nearby rentals <span className="ml-2">&rarr;</span>
+                            </button>
+                       
                         </Link>
                     </div>
                 ))}
