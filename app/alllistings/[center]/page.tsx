@@ -54,6 +54,7 @@ const Home = async ({ params, searchParams }: HomeProps) => {
               currentUser={currentUser}
               key={listing.id}
               data={listing}
+              showAddReviewButton={false}
             />
           ))}
         </div>

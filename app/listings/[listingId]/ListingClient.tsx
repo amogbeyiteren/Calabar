@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-// import whats needed 
+// Import necessary dependencies and types
 import axios from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -18,34 +18,34 @@ import ListingInfo from "@/app/components/listings/ListingInfo";
 import ListingReservation from "@/app/components/listings/ListingReservation";
 import ReviewsSection from "@/app/components/listings/ReviewSection";
 
-
-// initial and default date reanges to be used
+// Initial and default date ranges to be used
 const initialDateRange = {
   startDate: new Date(),
   endDate: new Date(),
   key: 'selection'
 };
 
-// type specifications
+// Define the ListingClientProps interface with reviews property
 interface ListingClientProps {
-  reservations?: SafeReservation[];
   listing: SafeListing & {
     user: SafeUser;
   };
+  reservations?: SafeReservation[];
+  reviews: any[]; // Adjust the type as per the actual type of reviews
   currentUser?: SafeUser | null;
 }
 
-// pass the type safetyprops
+// Define the ListingClient component
 const ListingClient: React.FC<ListingClientProps> = ({
   listing,
   reservations = [],
+  reviews = [], // Initialize reviews with an empty array
   currentUser
 }) => {
   const loginModal = useLoginModal();
   const router = useRouter();
 
-
-  // handles the whole logic that updates the start and end date stuff to be reserved
+  // Logic to find disabled dates
   const disabledDates = useMemo(() => {
     let dates: Date[] = [];
 
@@ -61,18 +61,16 @@ const ListingClient: React.FC<ListingClientProps> = ({
     return dates;
   }, [reservations]);
 
-
-// finds categories eaqual to the categories in lisying 
+  // Memoized category and center based on listing
   const category = useMemo(() => {
-     return categories.find((items) => 
-      items.label === listing.category);
+     return categories.find((items) => items.label === listing.category);
   }, [listing.category]);
 
   const center = useMemo(() => {
-    return centers.find((items) => 
-     items.label === listing.center);
- }, [listing.center]);
+    return centers.find((items) => items.label === listing.center);
+  }, [listing.center]);
 
+  // State and handlers for reservation creation
   const [isLoading, setIsLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(listing.price);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
@@ -110,6 +108,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
     loginModal
   ]);
 
+  // Effect to calculate total price based on selected date range
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {
       const dayCount = differenceInDays(
@@ -125,19 +124,17 @@ const ListingClient: React.FC<ListingClientProps> = ({
     }
   }, [dateRange, listing.price]);
 
+  // Handler for payment success
   const handlePaymentSuccess = useCallback(() => {
     onCreateReservation(); // Trigger reservation creation logic
   }, [onCreateReservation]);
 
+  // Render the component
   return ( 
     <Container>
-      <div 
-        className="
-          max-w-screen-lg 
-          mx-auto
-        "
-      >
+      <div className="max-w-screen-lg mx-auto">
         <div className="">
+          {/* ListingHead component */}
           <ListingHead
             title={listing.title}
             imageSrc={listing.imageSrc}
@@ -146,18 +143,10 @@ const ListingClient: React.FC<ListingClientProps> = ({
             currentUser={currentUser}
           />
 
+          <div className="flex gap-6"></div>
 
-          <div className="flex gap-6">
-
-          </div>
-
-
-          <div 
-            className="
-              
-              mt-6
-            "
-          >
+          <div className="mt-6">
+            {/* ListingInfo component */}
             <ListingInfo
               user={listing.user}
               category={category}
@@ -168,33 +157,28 @@ const ListingClient: React.FC<ListingClientProps> = ({
               bathroomCount={listing.bathroomCount}
               locationValue={listing.locationValue}
             />
-            <div 
-              className="
-                order-first 
-                mb-10 
-                md:order-last 
-                md:col-span-3
-              "
-            >
+
+            <div className="order-first mb-10 md:order-last md:col-span-3">
+              {/* ListingReservation component */}
               <ListingReservation
                 price={listing.price}
                 totalPrice={totalPrice}
                 onChangeDate={(value) => setDateRange(value)}
                 dateRange={dateRange}
                 onSubmit={onCreateReservation}
-                
                 onPaymentSuccess={handlePaymentSuccess}
                 disabled={isLoading}
                 disabledDates={disabledDates}
               />
 
-              <ReviewsSection/>
+              {/* ReviewsSection component */}
+              <ReviewsSection reviews={reviews} />
             </div>
           </div>
         </div>
       </div>
     </Container>
-   );
-}
+  );
+};
  
 export default ListingClient;

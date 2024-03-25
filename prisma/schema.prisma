@@ -8,20 +8,21 @@ datasource db {
 }
 
 model User {
-  id           String  @id       @default(auto()) @map("_id") @db.ObjectId
-  name         String?
-  email         String?  @unique
-  emailVerified DateTime?
-  image        String?
-  hashedPassword String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  favoriteIds   String[] @db.ObjectId
-  role          Role     @default(USER) 
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?
+  email           String?     @unique
+  emailVerified   DateTime?
+  image           String?
+  hashedPassword  String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  favoriteIds     String[]    @db.ObjectId
+  role            Role        @default(USER)
 
-  accounts Account[]
-  listings Listing[]
-  reservations Reservation[]
+  accounts        Account[]
+  listings        Listing[]
+  reservations    Reservation[]
+  reviews         Review[]    // New relation to reviews
 }
 
 enum Role {
@@ -30,64 +31,78 @@ enum Role {
 }
 
 model Account {
-  id           String  @id       @default(auto()) @map("_id") @db.ObjectId
-  userId       String  @db.ObjectId
-  type          String
-  provider     String
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String      @db.ObjectId
+  type              String
+  provider          String
   providerAccountId String
-  refresh_token String? @db.String
-  access_token  String? @db.String
-  expires_at    Int?
-  token_type    String?
-  scope         String?
-  id_token      String? @db.String
-  session_state String?
+  refresh_token     String?     @db.String
+  access_token      String?     @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?     @db.String
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Listing {
-  id           String  @id       @default(auto()) @map("_id") @db.ObjectId
-  title         String
-  description   String
-  imageSrc      String
-  createdAt     DateTime @default(now())
-  category      String
-  center        String?
-  roomCount     Int
-  bathroomCount Int
-  guestCount     Int
-  locationValue String
-  userId       String  @db.ObjectId
-  price         Int
-  touristCenter TouristCenter?  @relation(fields: [touristCenterId], references: [id], onDelete: SetNull)
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  description     String
+  imageSrc        String
+  createdAt       DateTime      @default(now())
+  category        String
+  center          String?
+  roomCount       Int
+  bathroomCount   Int
+  guestCount      Int
+  locationValue   String
+  userId          String        @db.ObjectId
+  price           Int
+  touristCenter   TouristCenter? @relation(fields: [touristCenterId], references: [id], onDelete: SetNull)
   touristCenterId String?        @db.ObjectId
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  reservations Reservation[]
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reservations    Reservation[]
+  reviews         Review[]      // New relation to reviews
 }
 
 model Reservation {
-  id           String  @id       @default(auto()) @map("_id") @db.ObjectId
-  userId       String  @db.ObjectId
-  listingId     String  @db.ObjectId
-  startDate     DateTime
-  endDate       DateTime
-  totalPrice    Int
-  createdAt     DateTime @default(now())
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String    @db.ObjectId
+  listingId    String    @db.ObjectId
+  startDate    DateTime
+  endDate      DateTime
+  totalPrice   Int
+  createdAt    DateTime  @default(now())
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing      Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String    @db.ObjectId
+  listingId    String    @db.ObjectId
+  rating       Int
+  comment      String?
+  createdAt    DateTime  @default(now())
+
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing      Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
 }
 
 // Relation definition on TouristCenter model is removed
 model TouristCenter {
-  id          String  @id       @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  location    String
-  image       String?
-  listings    Listing[]  // Relation defined without arguments 
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  location String
+  image    String?
+  listings Listing[] // Relation defined without arguments
 }
+
 
 
 

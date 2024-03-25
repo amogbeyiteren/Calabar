@@ -1,11 +1,12 @@
-import { Listing, Reservation, User } from "@prisma/client";
+import { Listing, Reservation, User, Review } from "@prisma/client";
 
+// Define SafeListing, SafeReservation, and SafeUser types
 export type SafeListing = Omit<Listing, "createdAt"> & {
   createdAt: string;
 };
 
 export type SafeReservation = Omit<
-  Reservation, 
+  Reservation,
   "createdAt" | "startDate" | "endDate" | "listing"
 > & {
   createdAt: string;
@@ -21,4 +22,16 @@ export type SafeUser = Omit<
   createdAt: string;
   updatedAt: string;
   emailVerified: string | null;
+};
+
+// Modify SafeReview to reflect the changes in SafeUser and SafeListing
+export type SafeReview = Omit<
+  Review,
+  "createdAt" | "userId" | "listingId" | "user" | "listing"
+> & {
+  createdAt: string;
+  userId: string;
+  listingId: string;
+  user: SafeUser;
+  listing: SafeListing;
 };
