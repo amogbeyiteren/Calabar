@@ -262,8 +262,8 @@ const RentModal = () => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="Add a photo of your work space"
-          subtitle="Show guests what your work space looks like!"
+          title="Add a photo of your place"
+          subtitle="Show guests what your place looks like!"
         />
         <ImageUpload
           onChange={(value) => setCustomValue('imageSrc', value)}
