@@ -10,7 +10,6 @@ declare global {
 }
 
 const uploadPreset = "ffn4sjnn";
-// ffn4sjnn
 
 interface ImageUploadProps {
   onChange: (value: string) => void;
@@ -33,7 +32,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         maxFiles: 1
       }}
     >
-      {({ open }) => {
+      {(uploadProps) => {
+        const { open } = uploadProps;
         return (
           <div
             onClick={() => open()}

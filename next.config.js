@@ -17,11 +17,7 @@ skipWaiting: true
 
 }),
 
-experimental: {
 
-appDir: true,
-
-},
 
 webpack: (config) => {
 
@@ -32,7 +28,7 @@ return config;
 },
 
 images: {
-
+ 
 domains: [
 
 'res.cloudinary.com',
