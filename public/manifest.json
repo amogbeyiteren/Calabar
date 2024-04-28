@@ -4,8 +4,8 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Calbr",
-    "short_name": "Calbr",
+    "name": "Calabar",
+    "short_name": "Calabar",
     "icons": [
         {
             "src": "/icon-192x192.png",

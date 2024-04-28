@@ -31,6 +31,7 @@ interface ListingInfoProps {
   } | undefined
 
   locationValue: string;
+  phoneNumber: string;
 }
 
 const ListingInfo: React.FC<ListingInfoProps> = ({
@@ -42,6 +43,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
   center,
   category,
   locationValue,
+  phoneNumber
 }) => {
   const { getByValue } = useCountries();
 
@@ -80,6 +82,9 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
           </div>
           <div>
             {bathroomCount} bathrooms
+          </div>
+          <div>
+            Owner Contact Info: {phoneNumber}
           </div>
         </div>
       </div>

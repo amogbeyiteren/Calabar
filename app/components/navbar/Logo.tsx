@@ -12,7 +12,7 @@ const Logo = () => {
   return ( 
     <div className="flex gap-2">
     <IoHomeOutline className=" text-green-500" size={24}/>
-    <Link href="/" className="text-green-500 text-xl font-bold">Calabr</Link>
+    <Link href="/" className="text-green-500 text-xl font-bold">Calabar</Link>
     </div>
    );
 }

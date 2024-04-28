@@ -31,6 +31,7 @@ enum STEPS {
   IMAGES = 4,
   DESCRIPTION = 5,
   PRICE = 6,
+  CONTACT_INFO = 7,
 }
 
 const RentModal = () => {
@@ -61,6 +62,7 @@ const RentModal = () => {
       price: 1,
       title: '',
       description: '',
+      phoneNumber: '',
     }
   });
 
@@ -71,6 +73,7 @@ const RentModal = () => {
   const roomCount = watch('roomCount');
   const bathroomCount = watch('bathroomCount');
   const imageSrc = watch('imageSrc');
+  const phoneNumber = watch('phoneNumber')
 
   const Map = useMemo(() => dynamic(() => import('../Map'), { 
     ssr: false 
@@ -108,7 +111,7 @@ const RentModal = () => {
   }
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    if (step !== STEPS.PRICE) {
+    if (step !== STEPS.CONTACT_INFO) {
       return onNext();
     }
     
@@ -131,7 +134,7 @@ const RentModal = () => {
   }
 
   const actionLabel = useMemo(() => {
-    if (step === STEPS.PRICE) {
+    if (step === STEPS.CONTACT_INFO) {
       return 'Create'
     }
 
@@ -313,6 +316,25 @@ const RentModal = () => {
           label="Price"
           formatPrice 
           type="number" 
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </div>
+    )
+  }
+
+  if (step === STEPS.CONTACT_INFO) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Now, add your Phone Number"
+          subtitle="So Prospective customers can contact you"
+        />
+        <Input
+          id="phoneNumber"
+          label="phoneNumber"
           disabled={isLoading}
           register={register}
           errors={errors}

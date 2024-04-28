@@ -15,7 +15,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="flex items-center gap-3 justify-center mb-8">
         <IoHomeOutline className=" text-green-500" size={24}/>
-    <Link href="/" className="text-green-500 text-2xl font-bold">Calabr</Link>
+    <Link href="/" className="text-green-500 text-2xl font-bold">Calabar</Link>
         </div>
           {/* First row of menu items */}
           <div>

@@ -64,7 +64,7 @@ const RegisterModal= () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading
-        title="Welcome to Calabr"
+        title="Welcome to Calabar"
         subtitle="Create an account! to get started with renting anf listing properties in calabar"
       />
       <Input

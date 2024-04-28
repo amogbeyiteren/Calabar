@@ -15,7 +15,7 @@ import getCurrentUser from './actions/getCurrentUser';
 
 export const metadata = {
   manifest: "/manifest.json", 
-  title: 'Calabr | Rent Your Property in Calabar.',
+  title: 'Calabar | Rent Your Property in Calabar.',
   description: 'Rent properties Around',
   icons: {apple: '/icon.png'},
   themeColor:  '#fff'
