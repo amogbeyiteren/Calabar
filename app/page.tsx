@@ -17,6 +17,7 @@ interface TouristCenter {
 function MainPage() {
     const [touristCenters, setTouristCenters] = useState<TouristCenter[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [fullText, setFullText] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
@@ -63,7 +64,7 @@ function MainPage() {
                             <div className="bg-green-200 text-xs font-bold text-green-800 px-2 py-1 rounded-md mb-4 inline-block">
                                 Opens {center.openingHours}
                             </div>
-                            <p className="text-sm text-gray-600 mb-4">{center.description.slice(0, 120)}...</p>
+                            <p onClick={()=>setFullText(!fullText)} className="text-sm text-gray-600 mb-4">{fullText?center.description.slice(0, 120)+'...':center.description}</p>
                            
                         </div>
 
