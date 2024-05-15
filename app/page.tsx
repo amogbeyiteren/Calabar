@@ -17,7 +17,16 @@ interface TouristCenter {
 function MainPage() {
     const [touristCenters, setTouristCenters] = useState<TouristCenter[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [fullText, setFullText] = useState<boolean>(false);
+    const [fullTextState, setFullTextState] = useState<{ [key: string]: boolean }>({});
+
+    const toggleFullText = (id: string) => {
+        setFullTextState((prevState) => ({
+            ...prevState,
+            [id]: !prevState[id],
+        }));
+    };
+
+    
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
@@ -64,8 +73,9 @@ function MainPage() {
                             <div className="bg-green-200 text-xs font-bold text-green-800 px-2 py-1 rounded-md mb-4 inline-block">
                                 Opens {center.openingHours}
                             </div>
-                            <p onClick={()=>setFullText(!fullText)} className="text-sm text-gray-600 mb-4">{fullText?center.description.slice(0, 120)+'...':center.description}</p>
-                           
+                            <p onClick={() => toggleFullText(center._id)} className="text-sm text-gray-600 mb-4">
+                            {fullTextState[center._id] ? center.description : center.description.slice(0, 120) + '...'}
+                        </p>
                         </div>
 
                         <Link href={`/alllistings/${center.label}`} >
